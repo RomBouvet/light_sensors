@@ -24,3 +24,8 @@ make telosb reinstall,X bsl,/dev/ttyUSBY
 
 Work in progress...
 
+
+## TODO
+
+* Create tasks for send
+

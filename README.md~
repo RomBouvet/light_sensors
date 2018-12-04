@@ -20,8 +20,6 @@ Si plusieurs capteurs sont branchés en même temps
 make telosb reinstall,X bsl,/dev/ttyUSBY
 ```
 
-
-
 ## Usage
 
 Work in progress...

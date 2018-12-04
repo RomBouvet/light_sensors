@@ -52,7 +52,7 @@ public class OdysseusApp implements MessageListener {
     Odysseus payload = new Odysseus();
     
 	while (true) {
-	/*System.out.println("Sending packet "); // to use to send packets
+	/*System.out.println("Sending packet ");
 	payload.set_id(id);
 	payload.set_light(light);
 	moteIF.send(0, payload);*/
