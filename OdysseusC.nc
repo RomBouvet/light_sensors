@@ -52,7 +52,7 @@ implementation{
 			// .. on demarre le timer
 			call Timer.startPeriodic(SAMPLING_FREQUENCY);
 	}
- radio
+
 	// Fonction de fin du controlleur radio
 	event void RadioControl.startDone(error_t err){
 		// S'il ne s'est pas lance..

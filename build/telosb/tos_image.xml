@@ -1,11 +1,11 @@
 <tos_image>
   <ident>
-    <uidhash>50E2D5AAL</uidhash>
+    <uidhash>8D66407BL</uidhash>
     <hostname>romain-VirtualB</hostname>
     <username>romain</username>
     <appname>OdysseusAppC</appname>
     <userhash>B08BA76DL</userhash>
-    <timestamp>5C064F84L</timestamp>
+    <timestamp>5C065F49L</timestamp>
     <deluge_support>no</deluge_support>
     <platform>telosb</platform>
   </ident>
