@@ -5,7 +5,6 @@
 #define SAMPLING_FREQUENCY 5000
 #define MASTER_ID 0
 
-// Meme structure pour tous les messages
 typedef nx_struct msg {
 	nx_uint16_t id;
 	nx_uint16_t light;
