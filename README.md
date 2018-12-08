@@ -11,19 +11,25 @@ make telosb
 ```
 
 Installer l'application sur chaque capteur en spécifiant l'id
+Il faudra que les ports soient accessibles (sudo chmod 666 port)
 ```
-make telosb reinstall,X
+make telosb reinstall,id
 ```
 
 Si plusieurs capteurs sont branchés en même temps
 ```
-make telosb reinstall,X bsl,/dev/ttyUSBY
+make telosb reinstall,id bsl,port
 ```
 
 ## Usage
 
-Work in progress...
+```
+java OdysseusApp -comm serial@port:telosb
+```
 
+## Configuration
+
+Il est possible de changer le fired() des timers ou l'id du maitre dans le fichier Odysseus.h
 
 ## TODO
 

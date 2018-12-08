@@ -124,7 +124,16 @@ implementation{
 	* Trigger sur la reception de donnees en serie
 	* Rien pour l'instant
 	*/
-	event message_t* SerialReceive.receive(message_t* buf_ptr, void* payload, uint8_t len){return buf_ptr;}
+	event message_t* SerialReceive.receive(message_t* buf_ptr, void* payload, uint8_t len){
+		msg_t* rcmSend = (msg_t*)call RadioPacket.getPayload(&packet, sizeof(msg_t));
+		if (rcmSend == NULL) {return buf_ptr;}
+		rcmSend->id = TOS_NODE_ID; 
+		if (call RadioSend.send(AM_BROADCAST_ADDR, &packet,sizeof(msg_t)) == SUCCESS){
+			call Leds.led0Toggle();
+			radio_locked = TRUE;
+		}
+		return buf_ptr;
+	}
 
 	/**
 	* Fonction de fin de mesure de la luminosite
@@ -175,18 +184,5 @@ implementation{
 	*/
 	event void RadioControl.stopDone(error_t err){}
 	event void SerialControl.stopDone(error_t err){}
-
-	/**
-	* Actualisation sur commande des capteurs
-	*/
-	task void refresh(){
-		msg_t* rcmSend = (msg_t*)call RadioPacket.getPayload(&packet, sizeof(msg_t));
-		if (rcmSend == NULL) {return;}
-		rcmSend->id = TOS_NODE_ID; 
-		if (call RadioSend.send(AM_BROADCAST_ADDR, &packet,sizeof(msg_t)) == SUCCESS){
-			call Leds.led0Toggle();
-			radio_locked = TRUE;
-		}
-	}
 	
 }
