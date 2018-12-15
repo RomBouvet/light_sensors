@@ -76,8 +76,9 @@ implementation{
 	/**
 	* Trigger sur reception de message radio
 	* On verifie si les donnees recues sont correctes 
-	* et on appelle l'envoie en serie
-	* ! WORK IN PROGRESS !
+	* et on appelle l'envoi en serie pour le maitre
+	* Pour le client on renverra soit les donnees recues soit la luminosite
+	* selon l'id du message recu
 	*/
 	event message_t* RadioReceive.receive(message_t* buf_ptr, void* payload, uint8_t len){
 		if(TOS_NODE_ID==MASTER_ID){
@@ -103,7 +104,7 @@ implementation{
 				msg_t* rcm = (msg_t*)payload;
 				if(len != sizeof(msg_t)){return buf_ptr;}
 				else{
-					if(rcm->id==MASTER_ID){
+					if(rcm->id!=MASTER_ID){
 						msg_t* rcmSend = (msg_t*)call RadioPacket.getPayload(&packet, sizeof(msg_t));
 						if (rcmSend == NULL) {return buf_ptr;}
 						rcmSend->id = rcm->id; 
@@ -111,7 +112,10 @@ implementation{
 						if (rcm == NULL) {return buf_ptr;}
 						if (call RadioPacket.maxPayloadLength()<sizeof(msg_t)){return buf_ptr;}
 						if (call RadioSend.send(MASTER_ID, &packet, sizeof(msg_t)) == SUCCESS)
-							serial_locked = TRUE;
+							radio_locked = TRUE;
+					} else{
+						// Appelle la lecture du capteur de luminosite
+						call LightRead.read();
 					}
 					
 				}
@@ -122,7 +126,7 @@ implementation{
 
 	/**
 	* Trigger sur la reception de donnees en serie
-	* Rien pour l'instant
+	* Si le maitre recoit des donnees, c'est que le client demande une actualisation
 	*/
 	event message_t* SerialReceive.receive(message_t* buf_ptr, void* payload, uint8_t len){
 		msg_t* rcmSend = (msg_t*)call RadioPacket.getPayload(&packet, sizeof(msg_t));
