@@ -132,7 +132,7 @@ implementation{
 		msg_t* rcmSend = (msg_t*)call RadioPacket.getPayload(&packet, sizeof(msg_t));
 		if (rcmSend == NULL) {return buf_ptr;}
 		rcmSend->id = TOS_NODE_ID; 
-		if (call RadioSend.send(AM_BROADCAST_ADDR, &packet,sizeof(msg_t)) == SUCCESS){
+		if (call RadioSend.send(MASTER_ID, &packet,sizeof(msg_t)) == SUCCESS){
 			call Leds.led0Toggle();
 			radio_locked = TRUE;
 		}
